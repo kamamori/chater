@@ -1,25 +1,20 @@
 <?php
-// myapplication/src/sandboxBundle/Command/SocketCommand.php
-// Change the namespace according to your bundle
+
 namespace AppBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
-// Include ratchet libs
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use AppBundle\Socket\Chat;
 
-// Change the namespace according to your bundle
-use AppBundle\Sockets\Chat;
-
-class SocketCommand extends Command
+class SocketCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this->setName('sockets:start-chat')
+        $this->setName('app:socket:listen')
             // the short description shown while running "php bin/console list"
             ->setHelp("Starts the chat socket demo")
             // the full command description shown when running the command with
@@ -38,10 +33,10 @@ class SocketCommand extends Command
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    new Chat()
+                    $this->getContainer()->get('AppBundle\Socket\Connection')
                 )
             ),
-            3000
+            8080
         );
         
         $server->run();

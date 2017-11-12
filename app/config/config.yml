@@ -37,6 +37,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        maxResults: '%max_results%'
     # form:
     #     resources:
     #         - 'AppBundle:Form:address.html.twig'
@@ -85,4 +87,7 @@ fos_user:
     user_class: AppBundle\Entity\User
     from_email:
         address: "%mailer_sender_address%"
-        sender_name: "%mailer_sender_name%"    
+        sender_name: "%mailer_sender_name%"
+    profile:
+        form:
+            type: AppBundle\Form\Type\ProfileFormType

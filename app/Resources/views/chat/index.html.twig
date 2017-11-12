@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="chat-room">
+        <button class="btn btn-default btn-history" type="button">Previous messages</button>
+        <div class="messages">
+            <div class="history"></div>
+            <div class="channel">
+                {% for message in messages %}
+                    {% include 'chat/message.html.twig' %}
+                {% endfor %}
+            </div>
+        </div>
+        <ul class="users"></ul>
+        {{ form(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+
+        var maxResults = {{ maxResults }};
+
+        (function(){
+
+            var messages = document.querySelector('.chat-room > .messages > .channel');
+            var users = document.querySelector('.chat-room > .users');
+            var form = document.forms.{{ form.vars.name }};
+            var content = form.elements["{{ form.content.vars.full_name }}"];
+            var send = form.elements["{{ form.send.vars.full_name }}"];
+            var close = form.elements["{{ form.close.vars.full_name }}"];
+
+            var ws = new WebSocket('ws://localhost:8080/{{ app.user.username }}/{{ chatRoom.id }}');
+            ws.onopen = function(e) {
+                content.disabled = false;
+                send.disabled = false;
+            };
+
+            ws.onmessage = function(e) {
+                var data = JSON.parse(e.data);
+
+                for(var key in data) {
+                    if (key === 'message') {
+                        messages.innerHTML += '<p>' + data.message + '</p>';
+                        for(var i=0; i<maxResults; i++) {
+
+                        }
+                    }
+                    else if (key === 'users') {
+                        users.innerHTML = data.users.map(function(username){ return '<li>' + username + '</li>'}).join('');
+                    }
+                }
+            };
+
+            ws.onerror = function(e) {
+                ws.close();
+            };
+
+            ws.onclose = function(e) {
+                content.disabled = true;
+                send.disabled = true;
+                alert('Connection has been closed');
+            };
+
+            close.addEventListener('click', function (event) {
+                event.preventDefault();
+                ws.close();
+            });
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                ws.send(content.value);
+            });
+
+            window.onbeforeunload = function() {
+                ws.onclose = function () {}; // disable onclose handler first
+                ws.close();
+            };
+
+        })();
+    </script>
+
+    <script type="text/javascript">
+        (function(){
+
+            var messages = document.querySelector('.chat-room > .messages');
+            var button = document.querySelector('.chat-room > .btn-history');
+            var history = messages.querySelector('.history');
+
+            button.addEventListener('click', function (event) {
+                var lastCreatedAt = messages.querySelector('.message:first-child').dataset.createdAt;
+                fetch('{{ path('message_list', {id:chatRoom.id}) }}?lastCreatedAt=' + lastCreatedAt, {credentials: 'same-origin' })
+                        .then(function(response) {
+                            return response.text();
+                        })
+                        .then(function(html){
+                            messages.innerHTML = html + messages.innerHTML;
+                        });
+            });
+        })();
+    </script>
+{% endblock %}

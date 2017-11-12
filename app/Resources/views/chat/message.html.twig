@@ -1,0 +1,5 @@
+<div class="message" data-created-at="{{ message.createdAt|date('Y-m-d H:i:s') }}">
+    <strong>{{ message.user.username }}</strong>
+    <p>{{ message.content }}</p>
+    <em>{{ message.createdAt|date('Y-m-d H:i') }}</em>
+</div>

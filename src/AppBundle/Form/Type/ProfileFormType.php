@@ -2,37 +2,17 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Doctrine\DBAL\CivilityEnum;
-use AppBundle\Entity\User;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
 
 
-class ProfileFormType extends AbstractType
+class ProfileFormType extends \FOS\UserBundle\Form\Type\ProfileFormType
 {
-    protected function buildUserForm(FormBuilder $builder, array $options)
+    protected function buildUserForm(FormBuilderInterface $builder, array $options)
     {
-
+        parent::buildUserForm($builder, $options);
         $builder
-            ->add('civility', 'choice', array(
-                'choices' => GenderEnum::getChoices(),
-                'expanded' => true,
-                'multiple' => false,
-            ))
-            ->add('lastname')
-            ->add('firstname')
-            ->add('username')
-            ->add('email', 'email');
+            ->add('phoneNumber')
+            ->add('birthDate')
+            ->add('address');
     }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::setDefaultOptions($resolver);
-        $resolver->setDefaults(array(
-            'data_class' => User::class,
-            'label_format' => 'form.user.%name%',
-        ));
-    }
-
 }

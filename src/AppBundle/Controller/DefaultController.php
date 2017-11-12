@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ChatRoom;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/default", name="default_page")
+     * @Route("/", name="default_page")
      */
     public function indexAction(Request $request)
     {
-        echo 'cool';
+        $chatRooms = $this->getDoctrine()->getRepository(ChatRoom::class)->findAll();
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'chatRooms' => $chatRooms
         ]);
     }
     
