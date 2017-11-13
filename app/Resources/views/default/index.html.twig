@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block container %}
+
+    <h1>Chat Rooms</h1>
     <ul>
     {% for chatRoom in chatRooms %}
         <li><a href="{{ path('chat_room', {id: chatRoom.id}) }}">{{ chatRoom.name }}</a></li>

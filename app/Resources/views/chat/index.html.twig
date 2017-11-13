@@ -1,18 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <div class="chat-room">
-        <button class="btn btn-default btn-history" type="button">Previous messages</button>
-        <div class="messages">
-            <div class="history"></div>
-            <div class="channel">
-                {% for message in messages %}
-                    {% include 'chat/message.html.twig' %}
-                {% endfor %}
+{% block container %}
+    <div class="chat-room row">
+        <div class="col-md-8">
+            <button class="btn btn-default btn-history" type="button">Previous messages</button>
+            <div class="messages">
+                <div class="history"></div>
+                <div class="channel">
+                    {% for message in messages %}
+                        {% include 'chat/message.html.twig' %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
-        <ul class="users"></ul>
-        {{ form(form) }}
+
+        <div class="col-md-4">
+            <ul class="users"></ul>
+        </div>
+        <div class="col-md-12">
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
+        </div>
     </div>
 {% endblock %}
 
@@ -24,8 +32,8 @@
 
         (function(){
 
-            var messages = document.querySelector('.chat-room > .messages > .channel');
-            var users = document.querySelector('.chat-room > .users');
+            var messages = document.querySelector('.messages > .channel');
+            var users = document.querySelector('.users');
             var form = document.forms.{{ form.vars.name }};
             var content = form.elements["{{ form.content.vars.full_name }}"];
             var send = form.elements["{{ form.send.vars.full_name }}"];
@@ -84,8 +92,8 @@
     <script type="text/javascript">
         (function(){
 
-            var messages = document.querySelector('.chat-room > .messages');
-            var button = document.querySelector('.chat-room > .btn-history');
+            var messages = document.querySelector('.messages');
+            var button = document.querySelector('.btn-history');
             var history = messages.querySelector('.history');
 
             button.addEventListener('click', function (event) {
