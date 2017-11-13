@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block container %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value=" Create " />
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

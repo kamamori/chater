@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ChatRoom;
 use AppBundle\Entity\Message;
+use AppBundle\Form\Type\ChatRoomType;
 use AppBundle\Form\Type\MessageType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -75,4 +76,5 @@ class ChatController extends Controller
             'messages' => array_reverse($messages)
         ]);
     }
+
 }

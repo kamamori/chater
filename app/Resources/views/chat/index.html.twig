@@ -15,6 +15,7 @@
         </div>
 
         <div class="col-md-4">
+            <strong>User(s) online:</strong>
             <ul class="users"></ul>
         </div>
         <div class="col-md-12">
@@ -79,6 +80,7 @@
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
                 ws.send(content.value);
+                content.value = "";
             });
 
             window.onbeforeunload = function() {

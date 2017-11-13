@@ -2,4 +2,10 @@
 
 {% block fos_user_content %}
 {% include "@FOSUser/Profile/show_content.html.twig" %}
+    <div>
+        <a class="nav-link js-scroll-trigger" href="{{ path('fos_user_profile_edit') }}">Update</a>
+    </div>
+    <div>
+        <a class="nav-link js-scroll-trigger" href="{{ path('default_page') }}">Chat Now!</a>
+    </div>
 {% endblock fos_user_content %}

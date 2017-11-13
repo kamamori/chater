@@ -8,4 +8,7 @@
         <li><a href="{{ path('chat_room', {id: chatRoom.id}) }}">{{ chatRoom.name }}</a></li>
     {% endfor %}
     </ul>
+    <div>
+        <a class="nav-link js-scroll-trigger" href="{{ path('create_room') }}">New room</a>
+    </div>
 {% endblock %}

@@ -2,4 +2,5 @@
 
 {% block fos_user_content %}
     {{ include('@FOSUser/Security/login_content.html.twig') }}
+    <a class="nav-link js-scroll-trigger" href="{{ path('fos_user_registration_register') }}">Register</a>
 {% endblock fos_user_content %}
