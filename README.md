@@ -14,6 +14,7 @@ applications between clients and servers over WebSockets.
     2. Composer Install
     3. Start: 'bin/console server:run'
     4. Start: 'bin/console app:socket:listen' (Handle the socket with Javascript)
+    5. Enjoy the chat on: '127.0.0.1:8000'
    
 # Note :
    Number of messages to load per page is configured to be 10 (in parameters).
