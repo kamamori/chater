@@ -1,5 +1,5 @@
 # CHATER! /mini-chat
- Chater! is a mini-chat project on Symfony "3.3" using Sockets 
+ Chater! is a mini-chat project on Symfony "3.3" using Sockets.
  
 # Requirements
 
@@ -14,5 +14,5 @@ applications between clients and servers over WebSockets.
     3. Start: 'bin/console app:socket:listen' (Handle the socket with Javascript)
     4. Start: 'bin/console server:run'
    
-#Note: 
+# Note :
    Number of messages to load per page is configured to be 10 (in parameters).
